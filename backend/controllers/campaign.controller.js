@@ -48,22 +48,24 @@ const getAllCampaigns=async (req, res)=> {
 };
 
 const updateDeliveryReport = async (campaignId) => {
-    campaignId = JSON.parse(campaignId);
-    const campaign = await campaignModel.findById(campaignId);
-    const segmentId = campaign.segmentId;
-    const segment = await segmentModel.findById(segmentId);
-    const users = [];
-    await Promise.all(segment.userId.map(async (userId) => {
-        const user = await userModel.findById(userId);
-        users.push(user);
-    }));
-    let success = [];
-    users.forEach((user) => {
-        if (Math.random() < 0.9) { success.push(user._id); }
-    });
-    campaign.success = success;
-    await campaign.save();
-    console.log("REPORT UPDATED");
+    try{
+        campaignId = JSON.parse(campaignId);
+        const campaign = await campaignModel.findById(campaignId);
+        const segmentId = campaign.segmentId;
+        const segment = await segmentModel.findById(segmentId);
+        const users = [];
+        await Promise.all(segment.userId.map(async (userId) => {
+            const user = await userModel.findById(userId);
+            users.push(user);
+        }));
+        let success = [];
+        users.forEach((user) => {
+            if (Math.random() < 0.9) { success.push(user._id); }
+        });
+        campaign.success = success;
+        await campaign.save();
+        console.log("REPORT UPDATED");
+    } catch (err) { console.log(err); }
 };
 
 
