@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { getFormattedDate } = require('../utils/utils');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -24,7 +25,7 @@ const userSchema = new mongoose.Schema({
     },
     last_visit: {
         type: Date,
-        default: Date.now
+        default: getFormattedDate(Date.now)
     }
 });
 
