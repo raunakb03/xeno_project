@@ -27,9 +27,9 @@ export default function Home() {
     const auth = useAuth();
 
     const handleCreateSegment = async (name: any) => {
-        let userIds: any = allUsers.map((user:any) => user._id);
+        let userIds: any = allUsers.map((user: any) => user._id);
         userIds = {
-            clerkId: auth.userId, 
+            clerkId: auth.userId,
             name,
             userId: userIds,
         }
@@ -54,14 +54,13 @@ export default function Home() {
 
     return (
         <>
-            <SignedOut>Signed out</SignedOut>
-            <SignedIn>
-                <section>
-                    <BreadCrum text={"Users"} Icon={HomeIcon} />
+            <section>
+                <BreadCrum text={"Users"} Icon={HomeIcon} />
+                <SignedIn>
                     <div className="flex justify-end items-center gap-3">
                         <Filter setFilterConditions={setFilterConditions} />
-                        <Button className="bg-gray-400 text-md py-5 font-bold px-2 rounded-[12px]"
-                            onClick={() => setFilterConditions([])}>
+                        <Button className="bg-gray-400 text-md py-5 font-bold px-2 rounded-[12px]" onClick={() =>
+                            setFilterConditions([])}>
                             <X />
                             Reset Filter
                         </Button>
@@ -94,8 +93,9 @@ export default function Home() {
                             </TableBody>
                         </Table>
                     </div>
-                </section>
-            </SignedIn>
+                </SignedIn>
+                <SignedOut>Signed out</SignedOut>
+            </section>
         </>
     );
 }

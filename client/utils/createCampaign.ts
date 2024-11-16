@@ -10,6 +10,7 @@ export const createCampaign = async (campaign: any) => {
 };
 
 export const getCampaigns = async (userId: any) => {
+    if(!userId) return [];
     try {
         const response = await axios.get('http://localhost:5000/get-all-campaigns?userId=' + userId);
         return response.data;

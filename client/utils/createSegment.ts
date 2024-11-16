@@ -10,7 +10,7 @@ export const createSegment = async (segment: any) => {
 };
 
 export const getSegments = async (clerkId: any) => {
-    console.log("called");
+    if(!clerkId) return [];
     try {
         const response = await axios.get('http://localhost:5000/get-all-segment?clerkId=' + clerkId);
         return response.data;

@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/sidebar"
 import Link from "next/link";
 
-// Menu items.
 const items = [
   {
     title: "Users",
