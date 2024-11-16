@@ -24,7 +24,7 @@ export default function Campaigns() {
 
     useEffect(() => {
         async function fetchSegments() {
-            const response = await getSegments();
+            const response = await getSegments(auth.userId);
             setAllSegments(response);
         }
         async function fetchCampaigns() {

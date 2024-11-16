@@ -37,7 +37,7 @@ export function SearchOptionBox({ options, setSegmentName, segmentValue }: any) 
                 <Command>
                     <CommandInput placeholder="Search framework..." className="h-9" />
                     <CommandList>
-                        <CommandEmpty>No framework found.</CommandEmpty>
+                        <CommandEmpty>No segment found.</CommandEmpty>
                         <CommandGroup>
                             {options.map((option: any) => (
                                 <CommandItem key={option.value} value={option.value} onSelect={(currentValue) => {

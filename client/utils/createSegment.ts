@@ -9,10 +9,10 @@ export const createSegment = async (segment: any) => {
     }
 };
 
-export const getSegments = async () => {
+export const getSegments = async (clerkId: any) => {
     console.log("called");
     try {
-        const response = await axios.get('http://localhost:5000/get-all-segment');
+        const response = await axios.get('http://localhost:5000/get-all-segment?clerkId=' + clerkId);
         return response.data;
     } catch (error) {
         console.error(error);

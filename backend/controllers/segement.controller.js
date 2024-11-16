@@ -13,7 +13,7 @@ const createSegment = async (req, res) => {
 };
 const getAllSegments = async (req, res) => {
     try {
-        const segments = await segmentModel.find();
+        const segments = await segmentModel.find({ clerkId: req.query.clerkId });
         res.status(200).send(segments);
     } catch (error) {
         console.log(error);

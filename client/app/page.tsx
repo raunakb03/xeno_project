@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { getAllUsers, getFilteredUsers } from "@/utils/getUsers";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut, useAuth } from "@clerk/nextjs";
 import { Home as HomeIcon, Plus, Users, X } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Filter from "@/components/Filter";
@@ -24,10 +24,12 @@ const tableRows = [
 export default function Home() {
     const [allUsers, setAllUsers] = useState([]);
     const [filterConditions, setFilterConditions] = useState([]);
+    const auth = useAuth();
 
     const handleCreateSegment = async (name: any) => {
         let userIds: any = allUsers.map((user:any) => user._id);
         userIds = {
+            clerkId: auth.userId, 
             name,
             userId: userIds,
         }
