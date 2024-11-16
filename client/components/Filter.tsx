@@ -46,7 +46,7 @@ export default function Filter({setFilterConditions}: any) {
     return (
         <Dialog>
             <DialogTrigger
-                className="bg-gray-400 text-md py-5 px-2 font-bold rounded-[12px] h-9 inline-flex justify-center items-center gap-2 text-white text-md">
+                className="bg-gray-400 text-md py-5 px-2 font-bold rounded-[12px] h-9 inline-flex justify-center items-center gap-2 text-white text-md hover:bg-primary">
                 <FilterX className="text-md" />
                 Filter
             </DialogTrigger>

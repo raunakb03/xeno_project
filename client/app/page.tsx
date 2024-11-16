@@ -8,6 +8,9 @@ import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { Home as HomeIcon, Plus, Users, X } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Filter from "@/components/Filter";
+import { createSegment } from "@/utils/createSegment";
+import BreadCrum from "@/components/Breadcrum";
+import SegmentName from "@/components/SegmentName";
 
 const tableRows = [
     "Name",
@@ -19,11 +22,17 @@ const tableRows = [
 ];
 
 export default function Home() {
-    const searchParams = useSearchParams();
-    const router = useRouter();
-
     const [allUsers, setAllUsers] = useState([]);
     const [filterConditions, setFilterConditions] = useState([]);
+
+    const handleCreateSegment = async (name: any) => {
+        let userIds: any = allUsers.map((user:any) => user._id);
+        userIds = {
+            name,
+            userId: userIds,
+        }
+        await createSegment(userIds);
+    };
 
     useEffect(() => {
         async function fetchFilteredUsers() {
@@ -46,29 +55,19 @@ export default function Home() {
             <SignedOut>Signed out</SignedOut>
             <SignedIn>
                 <section>
-                    {/* Bread crum section */}
-                    <div className="flex items-center space-x-2 text-gray-400">
-                        <HomeIcon className="icon_size_20" />
-                        <span className="text-[18px]">/</span>
-                        <span className="text-[18px]">Users</span>
-                    </div>
-                    <h1 className="text-[30px] font-bold text-gray-500">Users</h1>
+                    <BreadCrum text={"Users"} Icon={HomeIcon} />
                     <div className="flex justify-end items-center gap-3">
                         <Button className="bg-gray-400 text-md py-5 font-bold px-2 rounded-[12px]">
                             <Plus />
                             Add User
                         </Button>
-                        {
-                            <Filter setFilterConditions={setFilterConditions} />}
+                        <Filter setFilterConditions={setFilterConditions} />
                         <Button className="bg-gray-400 text-md py-5 font-bold px-2 rounded-[12px]"
                             onClick={() => setFilterConditions([])}>
                             <X />
                             Reset Filter
                         </Button>
-                        <Button className="bg-gray-400 text-md py-5 font-bold px-2 rounded-[12px]">
-                            <Users />
-                            Create Segment
-                        </Button>
+                        <SegmentName handleCreateSegment={handleCreateSegment} segmentSize={allUsers.length} />
                     </div>
                     <div className="mt-12">
                         <Table>
