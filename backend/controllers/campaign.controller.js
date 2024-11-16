@@ -1,6 +1,7 @@
 const campaignModel = require("../models/campaign.model");
 const segmentModel = require("../models/segment.model");
 const userModel = require("../models/user.model");
+const { sendToKafka } = require("../utils/producer");
 
 const createCampaign = async (req, res) => {
     try {
@@ -24,13 +25,14 @@ const createCampaign = async (req, res) => {
         });
 
         const success = [];
-        users.forEach((user) => {
-            if (Math.random() < 0.9) { 
-                success.push(user._id); 
-            } 
-        }); 
+        //users.forEach((user) => {
+        //    if (Math.random() < 0.9) { 
+        //        success.push(user._id); 
+        //    } 
+        //}); 
         let campaign=new campaignModel({ clerkId, name, segmentId, message, success }); 
         await campaign.save(); 
+        sendToKafka("create-report", campaign._id);
         campaign.segmentId = segment;
         res.status(201).send(campaign); 
     } catch (err) { 
@@ -44,4 +46,25 @@ const getAllCampaigns=async (req, res)=> {
         res.status(200).send(campaigns);
     } catch (err) { res.status(400).json(err); }
 };
-module.exports = { createCampaign, getAllCampaigns };
+
+const updateDeliveryReport = async (campaignId) => {
+    campaignId = JSON.parse(campaignId);
+    const campaign = await campaignModel.findById(campaignId);
+    const segmentId = campaign.segmentId;
+    const segment = await segmentModel.findById(segmentId);
+    const users = [];
+    await Promise.all(segment.userId.map(async (userId) => {
+        const user = await userModel.findById(userId);
+        users.push(user);
+    }));
+    let success = [];
+    users.forEach((user) => {
+        if (Math.random() < 0.9) { success.push(user._id); }
+    });
+    campaign.success = success;
+    await campaign.save();
+    console.log("REPORT UPDATED");
+};
+
+
+module.exports = { createCampaign, getAllCampaigns, updateDeliveryReport };

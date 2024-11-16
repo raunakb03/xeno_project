@@ -8,7 +8,6 @@ const campaignSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        unique: true
     },
     segmentId : {
         type: mongoose.Schema.Types.ObjectId,

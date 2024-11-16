@@ -2,6 +2,7 @@ const Kafka = require('node-rdkafka');
 const path = require("path");
 const { setCustomerDataInDatabase } = require('../controllers/customer.controller');
 const { setOrderDataInDatabase } = require('../controllers/order.controller');
+const { updateDeliveryReport } = require('../controllers/campaign.controller');
 
 const consumer = new Kafka.KafkaConsumer({
     'metadata.broker.list': 'kafka-2bb606d5-bhalotiaraunak1234-c136.g.aivencloud.com:21708',
@@ -17,7 +18,7 @@ consumer.connect();
 
 consumer.on('ready', () => {
     console.log('Test Consumer ready');
-    consumer.subscribe(['add-user', 'add-order']);
+    consumer.subscribe(['add-user', 'add-order', 'create-report']);
     consumer.consume();
 });
 
@@ -26,6 +27,8 @@ consumer.on('data', async (data) => {
         await setOrderDataInDatabase(data.value.toString());
     else if(data.topic === 'add-user')
         await setCustomerDataInDatabase(data.value.toString());
+    else if(data.topic == 'create-report')
+        await updateDeliveryReport(data.value.toString());
     else
         console.log("INVALID TOPIC ", data.topic);
 });
