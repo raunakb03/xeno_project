@@ -57,10 +57,6 @@ export default function Home() {
                 <section>
                     <BreadCrum text={"Users"} Icon={HomeIcon} />
                     <div className="flex justify-end items-center gap-3">
-                        <Button className="bg-gray-400 text-md py-5 font-bold px-2 rounded-[12px]">
-                            <Plus />
-                            Add User
-                        </Button>
                         <Filter setFilterConditions={setFilterConditions} />
                         <Button className="bg-gray-400 text-md py-5 font-bold px-2 rounded-[12px]"
                             onClick={() => setFilterConditions([])}>

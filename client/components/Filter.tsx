@@ -81,7 +81,6 @@ export default function Filter({setFilterConditions}: any) {
                                             <SelectItem value="lt">{'<'}</SelectItem>
                                             <SelectItem value="lte">{'<='}</SelectItem>
                                             <SelectItem value="eq">{'='}</SelectItem>
-                                            <SelectItem value="ne">{'!='}</SelectItem>
                                         </SelectContent>
                                     </Select>
                                     {

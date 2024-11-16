@@ -97,9 +97,7 @@ const buildQuery = (filters) => {
 
 const getFilteredUsers = async (req, res) => {
     const { filterData } = req.body;
-    console.log(filterData);
     const query = buildQuery(filterData);
-    console.log("this is query ", JSON.stringify(query));
     try {
         const users = await userModel.find(query);
         return res.status(200).send(users);
